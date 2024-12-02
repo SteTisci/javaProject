@@ -14,8 +14,10 @@ public class Classroom {
 
     // Aggiunge uno studente alla classe, verificando il limite massimo di 10
     public void add_student(Student student) {
-        if (students.size() < 10) {
+        if (students.size() < 10 && !students.contains(student)) {
             students.add(student);
+        } else if (students.contains(student)) {
+            System.out.println("The student " + student.get_name() + " is already present in the classroom");
         } else {
             System.out.println("\nThe classroom is full");
         }
