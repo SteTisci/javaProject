@@ -176,6 +176,12 @@ public class Controller {
                     break;
 
                 case "3":
+                    List<Student> studentsInClass = classroom.get_students();
+
+                    // Rimuove uno studente inserito nella classe se non è presente negli studenti
+                    // iscritti alla scuola
+                    studentsInClass.removeIf(student -> !school.get_school_students().contains(student));
+
                     // Visualizzazione degli studenti della classe
                     classroom.show_students();
                     break;
