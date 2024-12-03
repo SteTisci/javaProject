@@ -30,7 +30,9 @@ public class Controller {
                             "8) Exit\n");
             input = scanner.nextLine();
 
+            // Le liste vengono aggiornate ad ogni iterazione del ciclo while
             List<Classroom> schoolClassrooms = school.get_classrooms();
+            List<Student> studentInSchool = school.get_school_students();
 
             switch (input) {
                 case "1":
@@ -96,13 +98,13 @@ public class Controller {
                     System.out.println("- Students:");
                     school.show_students_names();
 
-                    if (!school.get_school_students().isEmpty()) {
+                    if (!studentInSchool.isEmpty()) {
                         System.out.println("\n- Select the student to remove:");
                         int index = readInt();
 
                         // Rimozione di uno studente dalla scuola
-                        if (index > 0 && index <= school.get_school_students().size()) {
-                            Student StudentToRemove = school.get_school_students().get(index - 1);
+                        if (index > 0 && index <= studentInSchool.size()) {
+                            Student StudentToRemove = studentInSchool.get(index - 1);
                             school.remove_student_from_school(StudentToRemove);
                         } else {
                             System.out.println("Invalid choice.");
@@ -139,7 +141,7 @@ public class Controller {
                             "4) Go back\n");
             input = scanner.nextLine();
 
-            // ad ogni ciclo le liste degli studenti vengono aggiornate
+            // Le liste vengono aggiornate ad ogni iterazione del ciclo while
             List<Student> studentsinClass = classroom.get_students();
             List<Student> studentsInSchool = school.get_school_students();
 
