@@ -16,7 +16,7 @@ public class Student {
     public void add_course(String courseName) {
         if (!courses.contains(courseName)) {
             courses.add(courseName);
-            System.out.println(name + " added to the " + courseName + " course");
+            System.out.println(name + " added to the " + courseName + " course.");
         }
     }
 
@@ -24,7 +24,7 @@ public class Student {
     public void remove_course(String courseName) {
         if (courses.contains(courseName)) {
             courses.remove(courseName);
-            System.out.println(name + " removed from the " + courseName + " course");
+            System.out.println(name + " removed from the " + courseName + " course.");
         }
     }
 

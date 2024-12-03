@@ -17,9 +17,9 @@ public class Classroom {
         if (students.size() < 10 && !students.contains(student)) {
             students.add(student);
         } else if (students.contains(student)) {
-            System.out.println("The student " + student.get_name() + " is already present in the classroom");
+            System.out.println("The student " + student.get_name() + " is already present in the classroom.");
         } else {
-            System.out.println("\nThe classroom is full");
+            System.out.println("The classroom is full.");
         }
     }
 
@@ -35,11 +35,10 @@ public class Classroom {
         int i = 0;
 
         if (students.isEmpty()) {
-            System.out.println("\nThe classroom is empty");
+            System.out.println("The classroom is empty.");
         } else {
-            System.out.println("\n- Students present in " + className + " class:");
             for (Student student : students) {
-                System.out.println(++i + ") " + student.get_name());
+                System.out.println(++i + ". " + student.get_name());
             }
         }
     }

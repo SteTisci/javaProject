@@ -19,7 +19,7 @@ public class Controller {
         // Ciclo principale del menu della scuola
         while (!input.equals("8")) {
             System.out.println(
-                    "\nSelect one of the options below:\n" +
+                    "\n- Select one of the options below:\n" +
                             "1) Create classroom\n" +
                             "2) Remove classroom\n" +
                             "3) Manage classroom\n" +
@@ -30,9 +30,11 @@ public class Controller {
                             "8) Exit\n");
             input = scanner.nextLine();
 
+            List<Classroom> schoolClassrooms = school.get_classrooms();
+
             switch (input) {
                 case "1":
-                    System.out.println("- Insert the class subject:");
+                    System.out.println("- Insert the course name:");
                     String className = scanner.nextLine();
 
                     // Creazione e aggiunta di una nuova aula
@@ -41,47 +43,48 @@ public class Controller {
                     break;
 
                 case "2":
-                    System.out.println("Classrooms present:");
+                    System.out.println("- Classrooms:");
                     school.show_classrooms();
-                    if (!school.get_classrooms().isEmpty()) {
-                        System.out.println("- Select the class to remove:");
+                    if (!schoolClassrooms.isEmpty()) {
+                        System.out.println("\n- Select the class to remove:");
                         int classIndex = readInt();
 
                         // Verifica che l'indice sia valido
-                        if (classIndex > 0 && classIndex <= school.get_classrooms().size()) {
-                            Classroom selectedClass = school.get_classrooms().get(classIndex - 1);
+                        if (classIndex > 0 && classIndex <= schoolClassrooms.size()) {
+                            Classroom selectedClass = schoolClassrooms.get(classIndex - 1);
                             school.remove_classroom(selectedClass);
                         } else {
-                            System.out.println("Invalid choice");
+                            System.out.println("Invalid choice.");
                         }
                     }
                     break;
 
                 case "3":
-                    System.out.println("Classrooms present:");
+                    System.out.println("- Classrooms:");
                     school.show_classrooms();
 
-                    if (!school.get_classrooms().isEmpty()) {
-                        System.out.println("- Select the class to manage:");
+                    if (!schoolClassrooms.isEmpty()) {
+                        System.out.println("\n- Select the class to manage:");
                         int classroomIndex = readInt();
 
                         // Gestione dell'aula selezionata
-                        if (classroomIndex > 0 && classroomIndex <= school.get_classrooms().size()) {
-                            Classroom classToManage = school.get_classrooms().get(classroomIndex - 1);
+                        if (classroomIndex > 0 && classroomIndex <= schoolClassrooms.size()) {
+                            Classroom classToManage = schoolClassrooms.get(classroomIndex - 1);
+
                             manage_classroom(classToManage, school);
                         } else {
-                            System.out.println("Invalid choice");
+                            System.out.println("Invalid choice.");
                         }
                     }
                     break;
 
                 case "4":
-                    System.out.println("Classrooms present:");
+                    System.out.println("- Classrooms:");
                     school.show_classrooms();
                     break;
 
                 case "5":
-                    System.out.println("\n- Insert student full name:");
+                    System.out.println("- Insert student full name:");
                     String name = scanner.nextLine();
 
                     // Registrazione di un nuovo studente alla scuola
@@ -90,24 +93,26 @@ public class Controller {
                     break;
 
                 case "6":
+                    System.out.println("- Students:");
                     school.show_students_names();
+
                     if (!school.get_school_students().isEmpty()) {
                         System.out.println("\n- Select the student to remove:");
                         int index = readInt();
 
                         // Rimozione di uno studente dalla scuola
                         if (index > 0 && index <= school.get_school_students().size()) {
-                            Student schoolStudentToRemove = school.get_school_students().get(index - 1);
-                            school.remove_student_from_school(schoolStudentToRemove);
+                            Student StudentToRemove = school.get_school_students().get(index - 1);
+                            school.remove_student_from_school(StudentToRemove);
                         } else {
-                            System.out.println("Invalid choice");
+                            System.out.println("Invalid choice.");
                         }
                     }
                     break;
 
                 case "7":
                     // Visualizzazione degli studenti registrati
-                    System.out.println("Registered students to " + school.get_schoolName() + ":\n");
+                    System.out.println("- Registered students to " + school.get_schoolName() + ":");
                     school.show_school_students();
                     break;
 
@@ -127,68 +132,67 @@ public class Controller {
         // Ciclo del menu per la gestione di una singola aula
         while (!input.equals("4")) {
             System.out.println(
-                    "\n" + classroom.get_className() + " class\n" +
+                    "\n- " + classroom.get_className() + " class\n" +
                             "1) Add student\n" +
                             "2) Remove student\n" +
                             "3) Show students\n" +
                             "4) Go back\n");
             input = scanner.nextLine();
 
+            // ad ogni ciclo le liste degli studenti vengono aggiornate
+            List<Student> studentsinClass = classroom.get_students();
+            List<Student> studentsInSchool = school.get_school_students();
+
+            // Rimozione studente in classe se rimosso da studenti della scuola
+            studentsinClass.removeIf(student -> !studentsInSchool.contains(student));
+
             switch (input) {
                 case "1":
-                    List<Student> schoolStudents = school.get_school_students();
+                    System.out.println("- Students:");
+                    school.show_students_names();
 
-                    if (!schoolStudents.isEmpty()) {
-                        school.show_students_names();
+                    if (!studentsInSchool.isEmpty()) {
                         System.out.println("\n- Select the student to add:");
                         int studentIndex = readInt();
 
                         // Aggiunta dello studente selezionato alla classe
-                        if (studentIndex > 0 && studentIndex <= schoolStudents.size()) {
-                            Student studentToAdd = schoolStudents.get(studentIndex - 1);
+                        if (studentIndex > 0 && studentIndex <= studentsInSchool.size()) {
+                            Student studentToAdd = studentsInSchool.get(studentIndex - 1);
                             classroom.add_student(studentToAdd);
                             studentToAdd.add_course(classroom.get_className());
                         } else {
-                            System.out.println("Invalid choice");
+                            System.out.println("Invalid choice.");
                         }
-                    } else {
-                        System.out.println("No students available to add.");
                     }
                     break;
 
                 case "2":
-                    List<Student> students = classroom.get_students();
-
-                    // Rimuove uno studente inserito nella classe se non è presente negli studenti
-                    // iscritti alla scuola
-                    students.removeIf(student -> !school.get_school_students().contains(student));
+                    System.out.println("- Students:");
                     classroom.show_students();
 
-                    if (!students.isEmpty()) {
+                    if (!studentsinClass.isEmpty()) {
                         System.out.println("\n- Select the student to remove:");
                         int studentIndex = readInt();
 
                         // Rimozione dello studente selezionato dalla classe
-                        if (studentIndex > 0 && studentIndex <= students.size()) {
-                            Student studentToRemove = students.get(studentIndex - 1);
+                        if (studentIndex > 0 && studentIndex <= studentsinClass.size()) {
+                            Student studentToRemove = studentsinClass.get(studentIndex - 1);
                             classroom.remove_student(studentToRemove);
                             studentToRemove.remove_course(classroom.get_className());
                         } else {
-                            System.out.println("Invalid choice");
+                            System.out.println("Invalid choice.");
                         }
                     }
                     break;
 
                 case "3":
-                    List<Student> studentsInClass = classroom.get_students();
-                    studentsInClass.removeIf(student -> !school.get_school_students().contains(student));
-
                     // Visualizzazione degli studenti della classe
+                    System.out.println("- Students:");
                     classroom.show_students();
                     break;
 
                 case "4":
-                    System.out.println("Returning to the previous menu...");
+                    System.out.println("- Returning to the previous menu...");
                     break;
 
                 default:
