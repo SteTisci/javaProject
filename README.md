@@ -56,14 +56,17 @@ L'applicazione offre le seguenti funzionalità attraverso un'interfaccia a menu:
    - Rimuovere studenti dalla classe.
    - Visualizzare gli studenti iscritti.
 
-4. **Registrare uno studente**  
+4. **Visualizzare le classi**
+   Mostrare un elenco delle classi presenti nella scuola.
+
+5. **Registrare uno studente**  
    Inserire il nome di uno studente per aggiungerlo alla scuola.
 
-5. **Cancellare uno studente**  
+6. **Cancellare uno studente**  
    Visualizzare l'elenco degli studenti iscritti e selezionare quello da rimuovere dalla scuola.
 
-6. **Visualizzare gli studenti registrati**  
+7. **Visualizzare gli studenti registrati**  
    Mostrare un elenco degli studenti iscritti alla scuola con i relativi corsi.
 
-7. **Uscire**  
+8. **Uscire**  
    Terminare l'applicazione.
