@@ -59,7 +59,7 @@ L'applicazione offre le seguenti funzionalità attraverso un'interfaccia a menu:
 4. **Visualizzare le classi**
    Mostrare un elenco delle classi presenti nella scuola.
 
-5. **Registrare uno studente**  
+5. **Registrare uno studente**
    Inserire il nome di uno studente per aggiungerlo alla scuola.
 
 6. **Cancellare uno studente**  
